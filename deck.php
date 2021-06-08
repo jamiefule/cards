@@ -1,4 +1,6 @@
 <?php
+require './card.php';
+
     class Deck{
         public $cards;
         public $discarded;
@@ -14,12 +16,27 @@
         }
 
         public function shuffle(){
+            //craft a new deck from randomly selected cards in the current deck
+            $newDeck = [];
 
+            //while deck has cards left, pick a random card and add it to the new deck
+            while(!empty($cards)){
+                $r = rand(0, $cards.length - 1);
+                array_splice($cards, $r->$position, 1);
+                array_push($newDeck, $r);
+            }
+
+            //set the cards to the newly shuffled deck
+            $cards = $newDeck;
         }
 
         public function deal_one_card(){
+            $r = rand(0, $cards.length - 1);
+            array_splice($cards, $r->$position, 1);
+            //add removed card to the discarded pile
+            array_push($discarded, $r);
 
-            return $card;
+            return $cards[$r];
         }
 
         function populateCards(){
