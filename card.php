@@ -1,11 +1,11 @@
 <?php
     class Card{
-       public $suite;
+       public $suit;
        public $value;
        public $position;
 
-       function __construct($s, $v, $p) {
-            $suite = $s;
+       public function __construct($s, $v, $p) {
+            $suit = $s;
             $value = $v;
             $position = $p;
         }
