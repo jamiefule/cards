@@ -2,12 +2,12 @@
     class Card{
        public $suit;
        public $value;
-       public $position;
-
-       public function __construct($s, $v, $p) {
-            $suit = $s;
-            $value = $v;
-            $position = $p;
+       public $commonName;
+       
+       public function __construct($s, $v, $cn) {
+            $this->suit = $s;
+            $this->value = $v;
+            $this->commonName = $cn;
         }
     }
 ?>

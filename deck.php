@@ -2,27 +2,25 @@
 require './card.php';
 
     class Deck{
-        public $cards;
-        public $discarded;
+        public $cards = [];
+        public $discarded = [];
 
-        //creates a newly populated deck of cards
-        public function __construct() {
-            $cards = populateCards();
-        }
-
-        //if you already had a deck of cards in mind
-        public function __construct($c) {
-            $cards = $c;
+        public function __construct($c = null) {
+            if($c != null)
+                $cards = $c;
+            else
+                self::populateCards();
         }
 
         public function shuffle(){
+            global $cards;
             //craft a new deck from randomly selected cards in the current deck
             $newDeck = [];
 
             //while deck has cards left, pick a random card and add it to the new deck
             while(!empty($cards)){
-                $r = rand(0, $cards.length - 1);
-                array_splice($cards, $r->$position, 1);
+                $r = rand(0, sizeof($cards) - 1);
+                array_splice($cards, $cards[$r]->position, 1);
                 array_push($newDeck, $r);
             }
 
@@ -31,24 +29,28 @@ require './card.php';
         }
 
         public function deal_one_card(){
-            $r = rand(0, $cards.length - 1);
-            array_splice($cards, $r->$position, 1);
-            //add removed card to the discarded pile
-            array_push($discarded, $r);
+            $c =array_pop($this->cards);
 
-            return $cards[$r];
+            //add removed card to the discarded pile
+            $this->discarded[] = $c;
+            
+            return $c;
         }
 
         function populateCards(){
-            $suits = ['hearts', 'diamonds', 'spades', 'clubs'];
-            $pos = 0;
 
-            for($i = 0; $i < 3; $i++){
-                for($j = 0; $j < 13; $j++){
-                    array_push($card, new Card($suits[$i], $j, $pos));
-                    $pos++;
+            $suits = ['Hearts', 'Diamonds', 'Spades', 'Clubs'];
+            $commonName = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"];
+            
+            for($i = 0; $i <= 3; $i++){
+                for($j = 1; $j <= 13; $j++){
+                    $this->cards[] =  new Card($suits[$i], $j, $commonName[$j-1]);
                 }
             }   
+        }
+
+        function resetDeck(){
+            $this->cards = array_reverse($this->discarded);
         }
     }
 ?>
