@@ -13,19 +13,19 @@ require './card.php';
         }
 
         public function shuffle(){
-            global $cards;
             //craft a new deck from randomly selected cards in the current deck
             $newDeck = [];
 
             //while deck has cards left, pick a random card and add it to the new deck
-            while(!empty($cards)){
-                $r = rand(0, sizeof($cards) - 1);
-                array_splice($cards, $cards[$r]->position, 1);
-                array_push($newDeck, $r);
+            while(!empty($this->cards)){
+                $r = rand(0, sizeof($this->cards) - 1);
+                $c = $this->cards[$r];
+                array_splice($this->cards, $r, 1);
+                array_push($newDeck, $c);
             }
 
             //set the cards to the newly shuffled deck
-            $cards = $newDeck;
+            $this->cards = $newDeck;
         }
 
         public function deal_one_card(){
@@ -34,7 +34,9 @@ require './card.php';
             //add removed card to the discarded pile
             $this->discarded[] = $c;
             
-            return $c;
+            if($c != null)
+                return $c;
+            return;
         }
 
         function populateCards(){
@@ -49,8 +51,10 @@ require './card.php';
             }   
         }
 
+        //if the deck has run out, move the cards from the discarded pile back to the regular pile
         function resetDeck(){
-            $this->cards = array_reverse($this->discarded);
+            if(empty($this->card))
+                $this->cards = array_reverse($this->discarded);
         }
     }
 ?>
