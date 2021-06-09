@@ -105,8 +105,8 @@
     $output .= "<p>Output:</p><textarea rows=6 cols=100>" . $test5Result . "</textarea>";
 
     //-------------------------Test 6-------------------------------------
-    //Test that you can't get more than 52 cards
-    $output .= "<h3>Test 6: Can you draw only 52 cards?</h3>";
+    //Test that you can't get more than the allowed cards
+    $output .= "<h3>Test 6: What happens if you draw more cards than are in the deck?</h3>";
 
     $test6Result = dealNCards($testDeck, 55);
 
